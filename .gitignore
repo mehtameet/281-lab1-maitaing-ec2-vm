@@ -1,0 +1,8 @@
+# Can ignore specific files
+src/AwsCredentials.properties
+
+bin/*
+.settings
+.classpath
+.project
+/bin
