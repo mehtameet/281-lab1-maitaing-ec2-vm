@@ -12,7 +12,7 @@ public class instance_methods {
 
 	AmazonEC2Client ec2;
 	public instance_methods() throws IOException{
-		AWSCredentials credentials = new PropertiesCredentials(createInstance.class.getResourceAsStream("AwsCredentials.properties"));
+		AWSCredentials credentials = new PropertiesCredentials(mainClass.class.getResourceAsStream("AwsCredentials.properties"));
 		ec2 = new AmazonEC2Client(credentials);
 		ec2.setEndpoint("ec2.us-west-2.amazonaws.com");
 	}

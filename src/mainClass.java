@@ -7,7 +7,7 @@ import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 
 
-public class createInstance {
+public class mainClass {
 
 	/**
 	 * @param args
