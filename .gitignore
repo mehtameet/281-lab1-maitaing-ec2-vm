@@ -1,5 +1,6 @@
 # Can ignore specific files
 src/AwsCredentials.properties
+src/AwsLab.java
 
 bin/*
 .settings

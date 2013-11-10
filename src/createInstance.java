@@ -4,6 +4,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
+import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 
 
 public class createInstance {
@@ -11,19 +12,15 @@ public class createInstance {
 	/**
 	 * @param args
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 
-		AWSCredentials credentials = new PropertiesCredentials(createInstance.class.getResourceAsStream("AwsCredentials.properties"));
+		instance_methods methods = new instance_methods();
 		
-		AmazonEC2Client amazonEC2Client = new AmazonEC2Client(credentials);
+		methods.createInstance();
 		
-		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
 		
-		DescribeInstancesRequest describeinstance=new DescribeInstancesRequest();
-		
-		System.out.println(describeinstance);
-
 	}
 
 }
