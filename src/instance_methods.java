@@ -7,6 +7,8 @@ import java.util.Set;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.CreateImageRequest;
+import com.amazonaws.services.ec2.model.CreateImageResult;
 import com.amazonaws.services.ec2.model.DescribeImagesResult;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Image;
@@ -34,7 +36,7 @@ public class instance_methods {
 	}
 
 	public void createInstance() throws InterruptedException{
-		System.out.println("#5 Create an Instance");
+		System.out.println("Create an Instance");
 		String imageId = "ami-68ad3358";//  change to SUSE 64 bit Amazon AMI
 		int minInstanceCount = 1; // create 1 instance
 		int maxInstanceCount = 1;
@@ -49,7 +51,6 @@ public class instance_methods {
 		/***********we wait for a while                                                **********/
 		System.out.println("waiting");
 		Thread.currentThread().sleep(50000);
-		System.out.println("OK");
 
 
 		List<Instance> resultInstance = result.getReservation().getInstances();
@@ -57,7 +58,7 @@ public class instance_methods {
 
 		String createdInstanceId = null;
 		for (Instance ins : resultInstance){
-
+			instanceIds.add(ins.getInstanceId());
 			createdInstanceId = ins.getInstanceId();
 			System.out.println("New instance has been created: "+ins.getInstanceId());//print the instance ID
 
@@ -68,7 +69,7 @@ public class instance_methods {
 	public void deleteInstance()
 	{
 
-		instanceIds.add("i-a806109c");
+		//instanceIds.add("i-a806109c");
 		System.out.println("#8 Terminate the Instance");
 		System.out.println("instance ids are : "+instanceIds);
         TerminateInstancesRequest tir = new TerminateInstancesRequest(instanceIds);
@@ -78,7 +79,7 @@ public class instance_methods {
 	public void startInstance() throws InterruptedException
 	{
 		boolean result=false;
-		instanceIds.add("i-a806109c");
+		//instanceIds.add("i-a806109c");
 		while(result==false)
 		{
 			try
@@ -99,7 +100,7 @@ public class instance_methods {
 	
 	public void stopInstance()
 	{
-		instanceIds.add("i-a806109c");
+		//instanceIds.add("i-a806109c");
 		StopInstancesRequest stopIR = new StopInstancesRequest(instanceIds);
         ec2.stopInstances(stopIR);
 	}
@@ -118,7 +119,7 @@ public class instance_methods {
           instances.addAll(reservation.getInstances());
          }
         
-         System.out.println("You have " + instances.size() + " Amazon EC2 instance(s).");
+         System.out.println("You have " + instances.size() + " Amazon EC2 size.");
          for (Instance ins : instances){
         
           // instance id
@@ -126,9 +127,20 @@ public class instance_methods {
         
           // instance state
           InstanceState is = ins.getState();
-          System.out.println("launch time is "+ins.getLaunchTime());
-          System.out.println(ins.getKeyName()+ " "+ ins.getIamInstanceProfile()+ ins.getPlatform()+ ins.getRamdiskId());
-          System.out.println(instanceId+" "+is.getName());
+          System.out.println("Launch time is "+ins.getLaunchTime());
+          System.out.println("Key name for instance is : "+ins.getKeyName());
+          System.out.println("Architecture type is : "+ ins.getArchitecture());
+          System.out.println("Hypervisor type is : "+ins.getHypervisor());
+          System.out.println("AMI Image id : "+ins.getImageId());
+          System.out.println("Instance id is : "+instanceId);
          }
+	}
+	
+	public void createAMI()
+	{
+		CreateImageResult createAMIResult =  ec2.createImage(new CreateImageRequest().withInstanceId("i-a806109c").withName("instance-ami-name").withNoReboot(true));
+		String imageId = createAMIResult.getImageId();
+		System.out.println("AMI image from instance created successfully");
+		System.out.println("Image id of AMi created is : "+imageId);
 	}
 }

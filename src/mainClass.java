@@ -64,8 +64,14 @@ public class mainClass {
 				System.out.println("Describing instances");
 				methods.describeInstance();
 				break;
+			
+			case 7:
+				System.out.println("Creating AMI from instance");
+				methods.createAMI();
+				break;
 				
 			default:
+				System.out.println("Sorry!!! invalid option. Pls try again");
 				break;
 			}
 		}
